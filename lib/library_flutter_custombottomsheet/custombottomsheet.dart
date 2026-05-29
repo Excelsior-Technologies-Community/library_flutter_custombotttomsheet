@@ -37,9 +37,11 @@ class _CustombottomsheetNavigationState extends State<CustombottomsheetNavigatio
       elevation: widget.elevation,
       currentIndex: widget.defaultIndex,
       selectedIconTheme: IconThemeData(color: widget.selectedIconColor),
-      onTap: (value) {
-        selectedIndex = value;
-      },
+        onTap: (value) {
+          setState(() {
+            selectedIndex = value;
+          });
+        },,
       items: List.generate(widget.bottomsheetlength, (index) {
         return BottomNavigationBarItem(icon: Icon(widget.bottomsheetIcons[index] ?? Icons.stop), label: widget.iconNames?[index] ?? "");
       },),

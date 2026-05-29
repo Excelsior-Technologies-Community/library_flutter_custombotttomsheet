@@ -23,6 +23,13 @@ class CustombottomsheetNavigation extends StatefulWidget {
 }
 
 class _CustombottomsheetNavigationState extends State<CustombottomsheetNavigation> {
+  int selectedIndex=0;
+  @override
+  void initState() {
+    // TODO: implement initState
+    selectedIndex= widget.defaultIndex;
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
@@ -30,6 +37,9 @@ class _CustombottomsheetNavigationState extends State<CustombottomsheetNavigatio
       elevation: widget.elevation,
       currentIndex: widget.defaultIndex,
       selectedIconTheme: IconThemeData(color: widget.selectedIconColor),
+      onTap: (value) {
+        selectedIndex = value;
+      },
       items: List.generate(widget.bottomsheetlength, (index) {
         return BottomNavigationBarItem(icon: Icon(widget.bottomsheetIcons[index] ?? Icons.stop), label: widget.iconNames?[index] ?? "");
       },),

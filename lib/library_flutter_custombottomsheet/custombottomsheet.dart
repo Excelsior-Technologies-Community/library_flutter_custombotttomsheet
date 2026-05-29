@@ -2,41 +2,53 @@ import 'package:flutter/material.dart';
 
 class CustombottomsheetNavigation extends StatefulWidget {
   final int defaultIndex;
-  final int bottomsheetlength;
   final List<IconData?> bottomsheetIcons;
   final List<String?>? iconNames;
+  final List<Widget> screens;
   final Color? backgroundColor;
   final double? elevation;
   final Color? selectedIconColor;
   final Color? unselectedIconColor;
+  final Color? selectedLabelColor;
+  final Color? unselectedLabelColor;
   final bool showSelectedLabel;
   final bool showUnselectedLabel;
   final double selectedFontSize;
   final double unselectedFontSize;
-  final Color? selectedLabelColor;
-  final Color? unselectedLabelColor;
   final String? fontFamily;
   final Function(int index)? onItemTap;
+  final bool hapticFeedback;
 
   const CustombottomsheetNavigation({
     super.key,
     this.defaultIndex = 0,
-    required this.bottomsheetlength,
     required this.bottomsheetIcons,
+    required this.screens,
     this.iconNames,
     this.backgroundColor,
     this.elevation,
+    this.hapticFeedback=false,
     this.selectedIconColor,
     this.unselectedIconColor,
-    this.showSelectedLabel = true,
-    this.showUnselectedLabel = true,
-    this.selectedFontSize = 15,
-    this.unselectedFontSize = 13,
     this.selectedLabelColor,
     this.unselectedLabelColor,
+    this.showSelectedLabel = true,
+    this.showUnselectedLabel = true,
+    this.selectedFontSize = 14,
+    this.unselectedFontSize = 12,
     this.fontFamily,
     this.onItemTap,
-  });
+  }) : assert(
+  bottomsheetIcons.length >= 2 &&
+      bottomsheetIcons.length <= 6,
+  "Bottom navigation supports only 2 to 6 tabs.",
+  ),assert(bottomsheetIcons.length == screens.length,
+  "Icons length and screens length must be same.",
+  ),
+        assert(
+        iconNames == null || iconNames.length == bottomsheetIcons.length,
+        "Labels length must match icons length.",
+        );
 
   @override
   State<CustombottomsheetNavigation> createState() =>
@@ -45,7 +57,7 @@ class CustombottomsheetNavigation extends StatefulWidget {
 
 class _CustombottomsheetNavigationState
     extends State<CustombottomsheetNavigation> {
-  int selectedIndex = 0;
+  late int selectedIndex;
 
   @override
   void initState() {
@@ -55,55 +67,68 @@ class _CustombottomsheetNavigationState
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      type: BottomNavigationBarType.fixed,
-      currentIndex: selectedIndex,
-      backgroundColor: widget.backgroundColor,
-      elevation: widget.elevation,
-      showSelectedLabels: widget.showSelectedLabel,
-      showUnselectedLabels: widget.showUnselectedLabel,
-      selectedFontSize: widget.selectedFontSize,
-      unselectedFontSize: widget.unselectedFontSize,
-      selectedItemColor: widget.selectedLabelColor,
-      unselectedItemColor: widget.unselectedLabelColor,
+    return Scaffold(
+      body: widget.screens[selectedIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        enableFeedback: widget.hapticFeedback,
+        type: BottomNavigationBarType.fixed,
+        currentIndex: selectedIndex,
+        backgroundColor: widget.backgroundColor,
+        elevation: widget.elevation,
+        showSelectedLabels: widget.showSelectedLabel,
+        showUnselectedLabels: widget.showUnselectedLabel,
+        selectedFontSize: widget.selectedFontSize,
+        unselectedFontSize: widget.unselectedFontSize,
+        selectedItemColor: widget.selectedLabelColor,
+        unselectedItemColor: widget.unselectedLabelColor,
+        selectedIconTheme: IconThemeData(
+          color: widget.selectedIconColor,
+        ),
 
-      selectedIconTheme: IconThemeData(
-        color: widget.selectedIconColor,
-      ),
+        unselectedIconTheme: IconThemeData(
+          color: widget.unselectedIconColor,
+        ),
 
-      unselectedIconTheme: IconThemeData(
-        color: widget.unselectedIconColor,
-      ),
+        selectedLabelStyle: TextStyle(
+          fontSize: widget.selectedFontSize,
+          fontFamily: widget.fontFamily,
+          fontWeight: FontWeight.w600,
+          color: widget.selectedLabelColor,
+        ),
 
-      selectedLabelStyle: TextStyle(
-        fontFamily: widget.fontFamily,
-        fontSize: widget.selectedFontSize,
-        color: widget.selectedLabelColor,
-        fontWeight: FontWeight.w600,
-      ),
+        unselectedLabelStyle: TextStyle(
+          fontSize: widget.unselectedFontSize,
+          fontFamily: widget.fontFamily,
+          color: widget.unselectedLabelColor,
+        ),
 
-      unselectedLabelStyle: TextStyle(
-        fontFamily: widget.fontFamily,
-        fontSize: widget.unselectedFontSize,
-        color: widget.unselectedLabelColor,
-      ),
+        onTap: (value) {
+          setState(() {
+            selectedIndex = value;
+          });
 
-      onTap: (value) {
-        setState(() {
-          selectedIndex = value;
-        });
-      },
-
-      items: List.generate(
-        widget.bottomsheetlength,
-            (index) {
-          return BottomNavigationBarItem(
-            icon: Icon(
-              widget.bottomsheetIcons[index] ?? Icons.stop,
-            ),
-            label: widget.iconNames?[index] ?? "",
-          );
+          widget.onItemTap?.call(value);
         },
+
+        items: List.generate(
+          widget.bottomsheetIcons.length,
+              (index) {
+            return BottomNavigationBarItem(
+              icon: Padding(
+                padding: EdgeInsets.only(
+                  top: widget.iconNames != null ? 4 : 0,
+                ),
+                child: Icon(
+                  widget.bottomsheetIcons[index] ?? Icons.stop,
+                ),
+              ),
+
+              label: widget.iconNames != null
+                  ? widget.iconNames![index] ?? ""
+                  : "",
+            );
+          },
+        ),
       ),
     );
   }

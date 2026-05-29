@@ -38,7 +38,7 @@ class CustombottomsheetNavigation extends StatefulWidget {
     this.unselectedLabelColor,
     this.showSelectedLabel = true,
     this.showUnselectedLabel = true,
-    this.selectedFontSize = 14,
+    this.selectedFontSize = 25,
     this.unselectedFontSize = 12,
     this.onItemTap,
   }) : assert(

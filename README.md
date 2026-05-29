@@ -20,21 +20,12 @@ A highly customizable Flutter bottom navigation widget with support for **2–6 
 
 ---
 
-# 🎬 Demo
 
 ### 📽️ Preview GIF
 
-![Demo](https://your-github-or-cdn-link/demo.gif)
+ <img src="assets/demo.gif" width="250" height="500"/>
 
-> Replace the above link with your actual GIF uploaded in:
 
-* GitHub repo (`/assets/demo.gif`)
-* or Gist / CDN / README assets
-
-Example:
-
-```
-https://raw.githubusercontent.com/yourusername/repo/main/assets/demo.gif
 ```
 
 ---
@@ -111,11 +102,6 @@ CustombottomsheetNavigation(
 ✔ Labels (if provided) must match length
 
 ---
-
-# Demo Vedio
- <img src="assets/" width="250" height="500"/>
-
-
 # 📄 License
 
 ```

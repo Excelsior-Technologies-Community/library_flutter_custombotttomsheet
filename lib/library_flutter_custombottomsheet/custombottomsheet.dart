@@ -35,7 +35,7 @@ class _CustombottomsheetNavigationState extends State<CustombottomsheetNavigatio
     return BottomNavigationBar(
       backgroundColor: widget.backgroundColor,
       elevation: widget.elevation,
-      currentIndex: widget.defaultIndex,
+      currentIndex: selectedIndex,
       selectedIconTheme: IconThemeData(color: widget.selectedIconColor),
       onTap: (value) {
         selectedIndex = value;

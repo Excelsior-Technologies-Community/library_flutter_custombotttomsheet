@@ -80,12 +80,12 @@ class _CustombottomsheetNavigationState
         elevation: widget.elevation,
         showSelectedLabels: widget.showSelectedLabel,
         showUnselectedLabels: widget.showUnselectedLabel,
-        selectedFontSize: widget.selectedFontSize,
         unselectedFontSize: widget.unselectedFontSize,
         selectedItemColor: widget.selectedLabelColor,
         unselectedItemColor: widget.unselectedLabelColor,
         selectedIconTheme: IconThemeData(
           color: widget.selectedIconColor,
+          size: widget.selectedFontSize
         ),
 
         unselectedIconTheme: IconThemeData(

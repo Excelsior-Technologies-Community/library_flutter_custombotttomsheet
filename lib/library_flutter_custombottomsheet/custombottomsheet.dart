@@ -17,7 +17,7 @@ class CustombottomsheetNavigation extends StatelessWidget {
     return BottomNavigationBar(
       currentIndex: defaultIndex,
       items: List.generate(bottomsheetlength, (index) {
-        return BottomNavigationBarItem(icon: Icon(bottomsheetIcons[index] ?? Icons.stop), label: iconNames![index] ?? "");
+        return BottomNavigationBarItem(icon: Icon(bottomsheetIcons[index] ?? Icons.stop), label: iconNames?[index] ?? "");
       },),
       type: BottomNavigationBarType.fixed
     );

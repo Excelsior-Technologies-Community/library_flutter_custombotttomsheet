@@ -15,15 +15,19 @@ class CustombottomsheetNavigation extends StatefulWidget {
   final bool showUnselectedLabel;
   final double selectedFontSize;
   final double unselectedFontSize;
-  final String? fontFamily;
   final Function(int index)? onItemTap;
   final bool hapticFeedback;
+
+  final TextStyle? selectedLabelStyle;
+  final TextStyle? unselectedLabelStyle;
 
   const CustombottomsheetNavigation({
     super.key,
     this.defaultIndex = 0,
     required this.bottomsheetIcons,
     required this.screens,
+    this.selectedLabelStyle,
+    this.unselectedLabelStyle,
     this.iconNames,
     this.backgroundColor,
     this.elevation,
@@ -36,7 +40,6 @@ class CustombottomsheetNavigation extends StatefulWidget {
     this.showUnselectedLabel = true,
     this.selectedFontSize = 14,
     this.unselectedFontSize = 12,
-    this.fontFamily,
     this.onItemTap,
   }) : assert(
   bottomsheetIcons.length >= 2 &&
@@ -89,24 +92,24 @@ class _CustombottomsheetNavigationState
           color: widget.unselectedIconColor,
         ),
 
-        selectedLabelStyle: TextStyle(
-          fontSize: widget.selectedFontSize,
-          fontFamily: widget.fontFamily,
-          fontWeight: FontWeight.w600,
-          color: widget.selectedLabelColor,
-        ),
+        selectedLabelStyle: widget.selectedLabelStyle ??
+            TextStyle(
+              fontSize: widget.selectedFontSize,
+              fontWeight: FontWeight.w600,
+              color: widget.selectedLabelColor,
+            ),
 
-        unselectedLabelStyle: TextStyle(
-          fontSize: widget.unselectedFontSize,
-          fontFamily: widget.fontFamily,
-          color: widget.unselectedLabelColor,
-        ),
+        unselectedLabelStyle:
+        widget.unselectedLabelStyle ??
+            TextStyle(
+              fontSize: widget.unselectedFontSize,
+              color: widget.unselectedLabelColor,
+            ),
 
         onTap: (value) {
           setState(() {
             selectedIndex = value;
           });
-
           widget.onItemTap?.call(value);
         },
 
